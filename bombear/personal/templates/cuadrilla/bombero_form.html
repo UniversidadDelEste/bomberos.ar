@@ -1,0 +1,31 @@
+{% extends "site.html" %}
+
+{% load i18n %}
+{% load url from future %}
+{% load crispy_forms_tags %}
+{% load bootstrap %}
+
+{% block sub_title %}{% trans "Cuadrilla de bomberos" %}{% endblock %}
+{% block navbar_title %}
+    {% if form.instance.id %}
+      <a href="#">{% trans "Editando miembro de la cuadrilla" %}</a>
+    {% else %}
+      <a href="#">{% trans "Nuevo miembro de cuadrilla" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <form action="." method="post" enctype="multipart/form-data">{% csrf_token %}
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Datos personales</h5>
+          {% crispy form %}
+        </div>
+      </div>
+      <button class="btn btn-raised btn-primary">Guardar</button>
+    </form>
+  </div>
+
+{% endblock %}

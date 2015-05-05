@@ -1,0 +1,239 @@
+{% extends "site.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load staticfiles %}
+{% load url from future %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="row">
+        <div class="col-md-2">
+          {% if bombero.foto %}
+          <a href="{{ MEDIA_URL }}{{ bombero.foto }}">
+            <img class="image-as-circle shadow-z-3" src="{{ MEDIA_URL }}{{ bombero.foto }}" alt="icon">
+          </a>
+          {% else %}
+            <img class="image-as-circle shadow-z-3" src="{{ bombero.foto_default}}" alt="icon">
+          {% endif %}
+        </div>
+        <div class="col-md-10">
+          <div class="page-header">
+            <h1>{{ bombero.apellido|title }} {{ bombero.nombre|title}} <small>{{ bombero.jerarquia }}</small></h1>
+            <strong>Número de orden <span class="badge"># 12</span></strong>
+          </div>
+        </div>
+      </div> 
+
+      <div class="row">
+        <div role="tabpanel">
+
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Datos Personales</a></li>
+            <li role="presentation"><a href="#familia" aria-controls="familia" role="tab" data-toggle="tab">Grupo Familiar</a></li>
+            <li role="presentation"><a href="#antiguedad" aria-controls="antiguedad" role="tab" data-toggle="tab">Antiguedad</a></li>
+            <li role="presentation"><a href="#estadisticas" aria-controls="estadisticas" role="tab" data-toggle="tab">Estadisticas</a></li>
+            <div class="dropdown pull-right">
+              <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong>Acciones</strong> 
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <li role="presentation"><a href="{% url 'bombero_update' bombero.id %}">Actualizar Datos Personales</a></li>
+                  <li role="presentation"><a href="#">Actualizar Grupo Familiar</a></li>
+                  <li role="presentation"><a href="#">Actualizar Antiguedad</a></li>
+                  <li role="presentation" class="divider"></li>
+                  <li role="presentation"><a href="#">Gestionar Renuncia</a></li>
+              </ul>
+            </div>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="perfil">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <table class="table table-hover ">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr> 
+                            <td><strong>Documento</strong></td>
+                            <td>{{ bombero.tipo_de_documento }} {{ bombero.documento }}</td>
+                          </tr>
+                          <tr> 
+                            <td><strong>Jerarquia</strong></td>
+                            <td>{{ bombero.jerarquia|title }}</td>
+                          </tr>
+                          <tr> 
+                            <td><strong>Cargo</strong></td>
+                            <td>{{ bombero.cargo|title }}</td>
+                          </tr>
+                          <tr> 
+                            <td><strong>Especialidad</strong></td>
+                            <td>{{ bombero.especialidad|title }}</td>
+                          </tr>
+                          <tr> 
+                            <td><strong>Estado</strong></td>
+                            {% if bombero.estado == 'CUERPO ACTIVO' %}
+                              <td class="success">{{ bombero.estado|title }}</td>
+                            {% else %}
+                              <td class="danger">{{ bombero.estado|title }}</td>
+                            {% endif %}
+                          </tr>
+                          <tr>
+                            <td><strong>Fecha de Nacimiento</strong></td>
+                            <td>{{ bombero.fecha_de_nacimiento }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Edad</strong></td>
+                            <td>{{ bombero.edad }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Fecha de Ingreso</strong></td>
+                            <td>{{ bombero.fecha_de_ingreso}}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Antiguedad</strong></td>
+                            <td>{{ bombero.antiguedad }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Numero de IOMA</strong></td>
+                            <td>{{ bombero.numero_de_ioma }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Grupo Sanguineo</strong></td>
+                            <td>{{ bombero.grupo_sanguineo }} Negativo</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Hijos</strong></td>
+                            <td>{{ bombero.hijos }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-6">
+                      <table class="table table-hover ">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr> 
+                            <td><strong>Telefono Celular</strong></td>
+                            <td>{{ bombero.telefono_celular}}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Telefono Particular</strong></td>
+                            <td>{{ bombero.telefono_particular }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Telefono del Trabajo</strong></td>
+                            <td>{{ bombero.telefono_trabajo }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Número de Hamdy</td>
+                            <td>{{ bombero.numero_del_hamdy }}</td>
+                          </tr>
+                          {% if bombero.es_chofer %}
+                            <tr class="success">
+                              <td><strong>Chofer Habilitado</strong></td>
+                                <td><i class="mdi-maps-beenhere"></i></td>
+                            </tr>
+                          {% endif %}
+                          <tr>
+                            <td><strong>Domicilio</strong></td>
+                            <td>{{ bombero.domicilio|title }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Oficio</strong></td>
+                            <td>{{ bombero.oficio }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Oficio</strong></td>
+                            <td>{{ bombero.oficio }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Estado Civil</strong></td>
+                            <td>{{ bombero.estado_civil }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Hijos</strong></td>
+                            <td>{{ bombero.hijos }}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Grupo Sanguineo</strong></td>
+                            <td>{{ bombero.grupo_sanguineo}}</td>
+                          </tr>
+                          <tr>
+                            <td><strong>Estado Civil</strong></td>
+                            <td>{{ bombero.estado_civil }}</td>
+                          </tr>
+                          {% if bombero.pencionado %}
+                            <tr class="success">
+                              <td><strong>Pencionado</strong></td>
+                                <td><i class="mdi-maps-beenhere"></i></td>
+                            </tr>
+                          {% endif %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div><!--/col-md-9-->
+                <div class="col-md-3">
+                <!-- botonera -->
+                </div>
+              </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="familia">
+              <div class="row">
+                <div class="col-md-12">
+                  <h1>Grupo Familiar</h1>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="antiguedad">
+              <div class="row">
+                <div class="col-md-12">
+                  <h1>Antiguedad</h1>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="estadisticas">
+              <div class="row">
+                <div class="col-md-12">
+                  <h1>Estadisticas</h1>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footscripts %}
+<script>
+  $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+{% endblock %}
