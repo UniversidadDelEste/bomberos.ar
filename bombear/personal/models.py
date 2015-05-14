@@ -188,7 +188,56 @@ class FichaMedica(models.Model):
         default="",
         verbose_name=_('Otros antecedentes'))
 
+    class Meta:
+        verbose_name_plural = 'Fichas Medicas'
+
     def __str__(self):
         bombero = "Ficha medica de {0} {1}".format(
             self.bombero.apellido, self.bombero.nombre)
         return "{0}".format(bombero)
+
+
+@python_2_unicode_compatible
+class Experiencia(models.Model):
+    """Experiencia de un bombero."""
+
+    bombero = models.ForeignKey(Bombero, related_name="experiencias")
+    desde = models.DateField()
+    hasta = models.DateField()
+    lugar = models.CharField(max_length=255, default="")
+
+    class Meta:
+        verbose_name_plural = 'Años de Experiencia'
+
+    def __str__(self):
+        experiencia = "{0} - Experiencia desde {1} hasta {2}".format(
+            self.bombero, self.desde, self.hasta)
+        return "{0}".format(experiencia)
+
+
+@python_2_unicode_compatible
+class Familiar(models.Model):
+    """Experiencia de un bombero."""
+
+    bombero = models.ForeignKey(Bombero, related_name="familiares")
+    parentesco = models.CharField(max_length=255)
+    nombre = models.CharField(
+        max_length=255,
+        verbose_name=_('Nombre'))
+    apellido = models.CharField(
+        max_length=255,
+        verbose_name=_('Apellido'))
+    edad = models.CharField(
+        null=True,
+        blank=True,
+        max_length=255,
+        verbose_name=_('Edad'))
+    otros_datos = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Familiares"
+
+    def __str__(self):
+        return "{0} {1} {2} de {3} {4}".format(
+            self.nombre, self.apellido, self.parentesco,
+            self.bombero.nombre, self.bombero.apellido)
