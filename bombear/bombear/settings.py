@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'personal',
+    'web',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,3 +107,8 @@ STATIC_URL = '/static/'
 
 # ADMIN SITE SETTINGS
 ADMIN_SITE_TITLE = "Bombe.ar | Chascomus"
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
