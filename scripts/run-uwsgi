@@ -1,0 +1,18 @@
+#!/bin/bash
+
+CURDIR=`pwd`
+PROJECT=$CURDIR/../bombear
+
+uwsgi --chdir=$PROJECT \
+    --module=bombear.wsgi:application \
+    --env DJANGO_SETTINGS_MODULE=bombear.settings \
+    --master --pidfile=$PROJECT/project-master.pid \
+    --socket=0.0.0.0:20000 \
+    --processes=2 \
+    --uid=1000 --gid=1000 \
+    --harakiri=10 \
+    --max-requests=5000 \
+    --vacuum \
+    --home=$HOME/.virtualenvs/bombear \
+
+#--daemonize=/var/log/uwsgi/yourproject.log      # background the process

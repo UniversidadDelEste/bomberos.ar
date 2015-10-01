@@ -106,3 +106,8 @@ STATIC_URL = '/static/'
 
 # ADMIN SITE SETTINGS
 ADMIN_SITE_TITLE = "Bombe.ar | Chascomus"
+
+try:
+    from devsettings import *
+except ImportError:
+    pass
