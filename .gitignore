@@ -56,3 +56,5 @@ docs/_build/
 # PyBuilder
 target/
 bombear/db.sqlite3
+
+devsettings*
