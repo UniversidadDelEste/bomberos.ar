@@ -1,2 +1,6 @@
-django>=1.7
-django-flat-theme
+Django==1.8.4
+argparse==1.2.1
+django-flat-theme==1.1.1
+psycopg2==2.6.1
+uWSGI==2.0.11.1
+wsgiref==0.1.2
