@@ -75,14 +75,32 @@ WSGI_APPLICATION = 'bombear.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# Docker will set linked containers at /etc/hosts
+lines = open('/etc/hosts').readlines()
+hosts = dict()
+for line in lines:
+    ip, name = line.split()[0:2]
+    hosts[name] = ip
 
+DB_HOST = hosts.get('pgsql', '127.0.0.1')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bomberos',
+        'USER': 'postgres',
+        'PASSWORD': 'secret',
+        'HOST': DB_HOST,
+        'PORT': '',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Internationalization
