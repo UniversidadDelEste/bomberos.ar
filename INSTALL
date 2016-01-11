@@ -1,0 +1,89 @@
+To run the project on Docker on Debian/Ubuntu
+=============================================
+
+1- You need the following docker containers already pulled
+    - docker pull debian:latest
+    - docker pull postgres
+        To create the postgres 'pgsql' container run:
+        $ docker run --name pgsql -e POSTGRES_PASSWORD=secret -d postgres
+
+2- Create bomberos.ar container
+Remember the syntax from '-v' is <your local project path: path in the container you want the project to be mounted>
+    $ docker run -it --name bombear --link pgsql:pgsql -p 8001:8001 -v ~/Work/bomberos.ar:/opt/bomberos debian
+
+3- Create the user you use in your workstation, inside the container (this makes more simple permission managment
+over files in the container). In my case, 'edvm' is my user in my local workstation, so inside the container i
+create the user 'edvm' too with:
+    root@3b8da19eb36a:/# adduser edvm
+    Adding user `edvm' ...
+    Adding new group `edvm' (1000) ...
+    Adding new user `edvm' (1000) with group `edvm' ...
+    Creating home directory `/home/edvm' ...
+
+Now you can check inside the container that you have access to /opt/bomberos as 'edvm':
+    root@3b8da19eb36a:/opt# ls -las
+    total 12
+    4 drwxr-xr-x  3 root root  4096 Jan  9 13:14 .
+    4 drwxr-xr-x 21 root root  4096 Jan  9 13:14 ..
+    4 drwxr-xr-x  5 edvm users 4096 Jan  9 13:13 bomberos
+
+4- Install following packages:
+    - virtualenvwrapper
+        # apt-get install virtualenvwrapper build-essential postgresql-client libpq-dev python3.4-dev libyaml-dev
+
+5- Create the project virtualenv and install project dependencies 
+Change to user 'edvm':
+    # su - edvm
+Create the virtualenv for the project:
+    $ mkvirtualenv -p /usr/bin/python3.4 bomberos
+Go to the project and install requirements:
+    $ cd /opt/bomberos/bombear/
+    $ pip install -r requirements.txt
+The project needs Pillow, you can use 'pimpmypillow' to have a fully Pillow installation
+workin for the project. To install pimpmypillow do:
+    $ pip install pimpmypillow
+
+
+6- Create database on PostgreSQL (being inside the container):
+    $ psql -U postgres -h pgsql
+    Password for user postgres: 
+    psql (9.4.5, server 9.4.4)
+    Type "help" for help.
+    
+    postgres=# CREATE DATABASE bomberos;
+    CREATE DATABASE
+
+	postgres=# \l
+									 List of databases
+	   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+	-----------+----------+----------+------------+------------+-----------------------
+	 bomberos  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+
+7- Fix bombear/settings to use the created database on PostgreSQL:
+
+Docker will set linked containers at /etc/hosts. Docker assign dinamic ip address
+to containers, and set them in /etc/hosts, so in the app settings.py you will notice that
+the file /etc/hosts is read. We read that file to get the ip address assigned to the 'pgsql'
+container, so then we can configure the DATABASES setting:
+	>>>  lines = open('/etc/hosts').readlines()
+	>>>  hosts = dict()
+	>>>  for line in lines:
+	>>>      ip, name = line.split()[0:2]
+	>>>      hosts[name] = ip
+	>>>  DB_HOST = hosts.get('pgsql', '127.0.0.1')
+
+Then we can configure the DATABASES like:
+	>>>  DATABASES = { 
+	>>>      'default': {
+	>>>          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	>>>          'NAME': 'bomberos',
+	>>>          'USER': 'postgres',
+	>>>          'PASSWORD': 'secret',
+	>>>          'HOST': DB_HOST,
+	>>>          'PORT': '', 
+	>>>      }   
+	>>>  }
+
+8- Create tables on database:
+	$ cd /opt/bomberos/bombear/
+    $ ./manage.py migrate
