@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 admin.site.site_header = settings.ADMIN_SITE_TITLE
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^admin/', include(admin.site.urls)),
 ]
