@@ -126,6 +126,6 @@ STATIC_URL = '/static/'
 ADMIN_SITE_TITLE = "Bombe.ar | Chascomus"
 
 try:
-    from devsettings import *
-except ImportError:
-    pass
+    from .devsettings import *
+except Exception as exc:
+    print(exc)
