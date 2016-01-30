@@ -159,6 +159,14 @@ class Bombero(models.Model):
     class Meta:
         ordering = ['apellido']
 
+    @property
+    def nombre_completo(self):
+        return "{0} {1}".format(self.apellido, self.nombre)
+
+    @property
+    def dni(self):
+        return "{0} {1}".format(self.tipo_de_documento, self.documento)
+
     def __str__(self):
         return "Bombero {0} {1}".format(self.apellido, self.nombre)
 

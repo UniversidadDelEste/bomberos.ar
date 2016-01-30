@@ -9,6 +9,7 @@ from personal.models import (
 
 class BomberoAdmin(admin.ModelAdmin):
 
+    list_display = ('nombre_completo', 'dni', 'telefono_celular', 'especialidad', 'estado')
     search_fields = ('nombre', 'apellido', 'documento',
                      'domicilio', 'telefono_celular')
     list_filter = ('especialidad', 'jerarquia', 'chofer',)
