@@ -17,6 +17,6 @@ Capturas de pantalla
 ====================
 
 ![](https://raw.githubusercontent.com/UniversidadDelEste/bomberos.ar/master/docs/admin_home.png)
-![alt tag](https://raw.githubusercontent.com/UniversidadDelEste/bomberos.ar/master/docs/bombero_list.png)
+![](https://raw.githubusercontent.com/UniversidadDelEste/bomberos.ar/master/docs/bombero_list.png)
 [[https://raw.githubusercontent.com/UniversidadDelEste/bomberos.ar/master/docs/familiar_list.png]]
 ![](https://raw.githubusercontent.com/UniversidadDelEste/bomberos.ar/master/docs/ficha_medica.png)
