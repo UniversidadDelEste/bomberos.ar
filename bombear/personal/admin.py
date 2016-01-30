@@ -23,6 +23,8 @@ class ExperienciaAdmin(admin.ModelAdmin):
 
 class FichaMedicaAdmin(admin.ModelAdmin):
 
+    list_display = ('bombero', 'grupo_sanguineo', 'factor_sanguineo')
+
     search_fields = ('bombero__nombre', 'bombero__apellido',
                      'bombero__documento',)
 
