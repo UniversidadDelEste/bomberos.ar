@@ -87,3 +87,24 @@ Then we can configure the DATABASES like:
 8- Create tables on database:
 	$ cd /opt/bomberos/bombear/
     $ ./manage.py migrate
+
+9- Create admin user with:
+	$ ./manage.py createsuperuser
+	Username (leave blank to use 'edvm'): 
+	Email address: edvm@fedoraproject.org
+	Password: 
+	Password (again): 
+	Superuser created successfully.
+
+10- Run the project with:
+	$ ./manage.py runserver
+	Performing system checks...
+
+	System check identified no issues (0 silenced).
+	January 29, 2016 - 22:14:57
+	Django version 1.8.4, using settings 'bombear.settings'
+	Starting development server at http://127.0.0.1:8000/
+	Quit the server with CONTROL-C.
+
+Now you can open your web browser and connect to:
+http://127.0.0.1:8000/admin
