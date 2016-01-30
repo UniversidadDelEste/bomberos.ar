@@ -120,7 +120,8 @@ class Bombero(models.Model):
         default=0,
         verbose_name=_('Antiguedad')
     )
-    numero_de_ioma = models.IntegerField(
+    numero_de_ioma = models.CharField(
+        max_length=255,
         null=True,
         blank=True,
         verbose_name=_('Numero de IOMA')
