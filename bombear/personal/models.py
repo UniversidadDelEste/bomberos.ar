@@ -161,14 +161,14 @@ class Bombero(models.Model):
 
     @property
     def nombre_completo(self):
-        return "{0} {1}".format(self.apellido, self.nombre)
+        return "{0}, {1}".format(self.apellido, self.nombre)
 
     @property
     def dni(self):
         return "{0} {1}".format(self.tipo_de_documento, self.documento)
 
     def __str__(self):
-        return "Bombero {0} {1}".format(self.apellido, self.nombre)
+        return "{0}, {1}".format(self.apellido, self.nombre)
 
 
 @python_2_unicode_compatible
@@ -250,7 +250,7 @@ class Familiar(models.Model):
 
     @property
     def nombre_completo(self):
-        return "{0} {1}".format(self.apellido, self.nombre)
+        return "{0}, {1}".format(self.apellido, self.nombre)
 
     def __str__(self):
         return "{0} {1} {2} de {3} {4}".format(
