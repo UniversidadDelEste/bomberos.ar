@@ -1,7 +1,13 @@
 {% extends "admin/base_site.html" %}
+{% load staticfiles %}
 {% load i18n admin_static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/custom.css" %}" />
+<!-- Latest compiled and minified CSS -->
+
+{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -9,10 +15,34 @@
 
 {% block breadcrumbs %}{% endblock %}
 
+{% block content_title %}{% if title %}{% endif %}{% endblock %}
 {% block content %}
-<div id="content-main">
+<div class="box-container">
+  <div class="box-item">
+    <div id="icon">
+      <a href="personal/bombero">
+        <img src={% static 'img/fireman-icon.png' %} />
+      </a>
+    </div>
+  </div>
+  <div class="box-item">
+    <div id="icon">
+      <a href="personal/fichamedica">
+        <img src={% static 'img/med-icon.png' %} />
+      </a>
+    </div>
+  </div>
+  <div class="box-item">
+    <div id="icon">
+      <a href="personal/familiar">
+        <img src={% static 'img/family-icon.png' %} />
+      </a>
+    </div>
+  </div>
+</div>
 
-<h1>frula</h1>
+
+<div id="content-main">
 {% if app_list %}
     {% for app in app_list %}
         <div class="app-{{ app.app_label }} module">

@@ -1,0 +1,30 @@
+/* DASHBOARD */
+
+.dashboard #content {
+    height: 200px;
+}
+
+.box-container {
+    display: flex;
+    height: 100%;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.box-item {
+    width: 200px;
+    height: 200px;
+    background-color: #417690;	
+    color: white;
+    font-weight: bold;
+}
+
+.box-item #icon img{
+    -webkit-filter: invert(1);
+    filter: invert(1);
+    width: 120px;
+    height: 120px;
+    margin-top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+}
