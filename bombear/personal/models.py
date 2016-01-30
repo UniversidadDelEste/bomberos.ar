@@ -248,6 +248,10 @@ class Familiar(models.Model):
     class Meta:
         verbose_name_plural = "Familiares"
 
+    @property
+    def nombre_completo(self):
+        return "{0} {1}".format(self.apellido, self.nombre)
+
     def __str__(self):
         return "{0} {1} {2} de {3} {4}".format(
             self.nombre, self.apellido, self.parentesco,

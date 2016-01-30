@@ -28,6 +28,7 @@ class FichaMedicaAdmin(admin.ModelAdmin):
 
 
 class FamiliarAdmin(admin.ModelAdmin):
+    list_display = ('nombre_completo', 'parentesco', 'bombero')
 
     search_fields = ('bombero__nombre', 'bombero__apellido',
                      'bombero__documento',)
